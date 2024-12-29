@@ -118,7 +118,6 @@ bookSearch.oninput = function () {
 bookFilter.onchange = function () {
    renderBooks();
 };
-
 function renderBooks() {
    if (!books.length) {
       bookList.innerHTML = `
