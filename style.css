@@ -1,0 +1,361 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: #1a261a;
+    color: #fff;
+    line-height: 1.5;
+}
+
+input,
+button,
+textarea,
+select {
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button {
+    background: transparent;
+    border: none;
+}
+
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 50px;
+    background: #2b3a2b;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-heading {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #f0a500;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.todo-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.input,
+.submit-btn {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background: transparent;
+    font-weight: 600;
+    font-size: 1.6rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.input {
+    flex: 1;
+    color: #fff;
+}
+
+.input:focus {
+    border-color: #50ad7e;
+    outline: none;
+}
+
+.submit-btn {
+    flex-shrink: 0;
+    cursor: pointer;
+    color: #f0a500;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    color: #fff;
+    background-color: #ea9652;
+    border-color: #ea9652;
+}
+
+.filter-section {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-section label {
+    font-size: 1.6rem;
+    color: #f0a500;
+}
+
+.task-filter {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #2b3a2b;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.task-item {
+    display: flex;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ea9652;
+    background: #2b3a2b;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.task-item.completed {
+    opacity: 0.6;
+    background-color: #505e50;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-title {
+    flex: 1;
+    font-size: 1.6rem;
+}
+
+.task-action {
+    display: flex;
+    gap: 16px;
+}
+
+.task-btn {
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.task-btn.edit {
+    color: #50ad7e;
+}
+
+.task-btn.done {
+    color: #ea9652;
+}
+
+.task-btn.delete {
+    color: #a13538;
+}
+
+.task-btn:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#empty-message {
+    list-style: none;
+    font-style: italic;
+    color: #888;
+    text-align: center;
+}
+
+.task-item.added {
+    transform: scale(1.1);
+    opacity: 0;
+}
+
+/* General styles for the book form */
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.select {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background: #2b3a2b;
+    font-size: 1.6rem;
+    color: #fff;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.select:focus {
+    border-color: #50ad7e;
+    outline: none;
+}
+
+/* Book list styles */
+.book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.book-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #f0a500;
+    border-radius: 8px;
+    background-color: #2b3a2b;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.book-item:hover {
+    background-color: #3c4d3c;
+    transform: scale(1.02);
+}
+
+.book-item .book-info {
+    flex: 1;
+}
+
+.book-item .book-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #f0a500;
+}
+
+.book-item .book-author {
+    font-size: 1.4rem;
+    color: #bbb;
+}
+
+.book-item .book-genre {
+    font-size: 1.4rem;
+    color: #50ad7e;
+    font-style: italic;
+}
+
+/* Action buttons in each book item */
+.book-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #f0a500;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.action-btn.edit {
+    color: #50ad7e;
+}
+
+.action-btn.delete {
+    color: #a13538;
+}
+
+.action-btn:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Filter section styles */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0a500;
+    margin-bottom: 20px;
+}
+
+.book-filter {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background: #2b3a2b;
+    color: #fff;
+    font-size: 1.6rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.book-filter:focus {
+    border-color: #50ad7e;
+    outline: none;
+}
+
+/* Bulk actions styles */
+.bulk-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-all-books {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #a13538;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.delete-all-books:hover {
+    background: #f44336;
+    color: #fff;
+}
+
+/* Empty message */
+#empty-message {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #bbb;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Cơ bản cho nút yêu thích */
+.action-btn.favorite {
+    font-size: 24px;
+    color: gray;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: scale(1);
+}
+
+.action-btn.favorite.active {
+    color: gold;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+
+.row {
+    display: flex;
+    gap: 15px;
+}

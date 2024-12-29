@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Book Manager</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <main>
+         <!-- Page heading -->
+         <h1 class="page-heading">Manage Your Book List</h1>
+
+         <!-- Form -->
+         <form id="book-form" class="book-form">
+            <input
+               type="text"
+               id="book-title"
+               class="input"
+               placeholder="Book Title"
+               spellcheck="false"
+            />
+            <input
+               type="text"
+               id="book-author"
+               class="input"
+               placeholder="Author"
+               spellcheck="false"
+            />
+            <select id="book-genre" class="select">
+               <option value="fiction" selected>Fiction</option>
+               <option value="non-fiction">Non-fiction</option>
+            </select>
+            <button
+               id="book-submit"
+               class="submit-btn"
+               onmousedown="event.preventDefault()"
+            >
+               Add Book
+            </button>
+         </form>
+
+         <!-- Filter Section -->
+         <div class="filter-section">
+            <label for="filter-books">Filter books by genre:</label>
+            <select id="book-filter" class="book-filter">
+               <option value="all">All</option>
+               <option value="fiction">Fiction</option>
+               <option value="non-fiction">Non-fiction</option>
+            </select>
+         </div>
+         <div class="row">
+            <input
+               type="number"
+               id="book-rating"
+               class="input"
+               placeholder="Rating (1-5)"
+               min="1"
+               max="5"
+            />
+
+            <input
+               type="text"
+               id="book-search"
+               class="input"
+               placeholder="Search books..."
+            />
+         </div>
+         <button id="export-books">Export Books</button>
+
+         <!-- Bulk Actions -->
+         <div class="bulk-actions">
+            <button id="delete-all-books" class="delete-all-books">
+               Delete All Books
+            </button>
+         </div>
+         <!-- Book list -->
+         <ul id="book-list" class="book-list"></ul>
+      </main>
+      <script src="script.js"></script>
+   </body>
+</html>
