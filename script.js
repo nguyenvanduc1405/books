@@ -9,6 +9,18 @@ const bookRating = $("#book-rating");
 const bookFilter = $("#book-filter");
 const deleteAllBooks = $("#delete-all-books");
 const bookSearch = $("#book-search");
+const exportBooks = $("#export-books");
+
+function idGenerator(length = 5) {
+   const characters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+   let result = "";
+   for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+   }
+   return result;
+}
 
 let books = JSON.parse(localStorage.getItem("books")) ?? [];
 
@@ -24,11 +36,14 @@ bookForm.onsubmit = function (e) {
       !bookAuthorValue ||
       !bookGenreValue ||
       !bookRatingValue
-   )
+   ) {
       return alert("All fields must be filled");
-   if (isDuplicate(bookTitleValue))
+   }
+   if (isDuplicate(bookTitleValue)) {
       return alert("The title must not overlap with other titles");
+   }
    books.push({
+      id: idGenerator(),
       title: bookTitleValue,
       author: bookAuthorValue,
       fiction: bookGenreValue,
@@ -44,12 +59,11 @@ bookForm.onsubmit = function (e) {
 bookList.onclick = function (e) {
    const booksItem = e.target.closest(".book-item");
    if (!booksItem) return;
-   const bookItemIndex = +booksItem?.dataset.index;
-   const book = books[bookItemIndex];
+   const bookId = booksItem.dataset.id;
+   const bookIndex = books.findIndex((book) => book.id === bookId);
+   const book = books[bookIndex];
 
    if (e.target.closest(".favorite")) {
-      console.log(bookItemIndex);
-
       book.isFinite = !book.isFinite;
       renderBooks();
       saveBooks();
@@ -60,16 +74,17 @@ bookList.onclick = function (e) {
       bookAuthor.value = book.author;
       bookGenre.value = book.fiction;
       bookRating.value = book.rating;
-      books.splice(bookItemIndex, 1);
+      books.splice(bookIndex, 1);
       renderBooks();
-      if (isDuplicate(bookTitle.value))
+      if (isDuplicate(bookTitle.value)) {
          return alert("The title must not overlap with other titles");
+      }
       saveBooks();
       return;
    }
    if (e.target.closest(".delete")) {
       if (confirm("You must definitely delete this book")) {
-         books.splice(bookItemIndex, 1);
+         books.splice(bookIndex, 1);
          renderBooks();
          saveBooks();
          return;
@@ -100,7 +115,7 @@ bookSearch.oninput = function () {
    renderBooks();
 };
 
-bookFilter.onchange = function (e) {
+bookFilter.onchange = function () {
    renderBooks();
 };
 
@@ -108,7 +123,7 @@ function renderBooks() {
    if (!books.length) {
       bookList.innerHTML = `
         <li id="empty-message">No books available.</li>
-    `;
+      `;
       return;
    }
    const searchInput = bookSearch.value.trim().toLowerCase();
@@ -127,8 +142,8 @@ function renderBooks() {
    });
    const html = filterBooksType
       .map(
-         (book, index) => `
-    <li class="book-item" data-index="${index}">
+         (book) => `
+    <li class="book-item" data-id="${book.id}">
                <div class="book-info">
                   <p class="book-title">${book.title}</p>
                   <p class="book-author">Author: ${book.author}</p>
@@ -143,9 +158,20 @@ function renderBooks() {
                   <button class="action-btn delete">Delete</button>
                </div>
             </li>
-`
+  `
       )
       .join(" ");
    bookList.innerHTML = html;
 }
+
+exportBooks.onclick = function () {
+   const data = JSON.stringify(books, null, 2);
+   const blob = new Blob([data], { type: "application/json" });
+   const url = URL.createObjectURL(blob);
+   const a = document.createElement("a");
+   a.href = url;
+   a.download = "books.json";
+   a.click();
+};
+
 renderBooks();
