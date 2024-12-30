@@ -119,11 +119,9 @@ function handleDeleteAllBooks() {
 
 function handleSearchBooks() {
    saveBooks();
-   renderBooks();
 }
 
 function handleFiltersBooks() {
-   saveBooks();
    renderBooks();
 }
 function renderBooks() {
@@ -147,6 +145,7 @@ function renderBooks() {
             : true;
       return isSearchBookValue && filterValueType;
    });
+   saveBooks();
    const html = filterBooksType
       .map(
          (book) => `
