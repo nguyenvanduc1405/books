@@ -118,12 +118,22 @@ function handleDeleteAllBooks() {
 }
 
 function handleSearchBooks() {
-   saveBooks();
+   renderBooks();
 }
 
 function handleFiltersBooks() {
+   localStorage.setItem("filterValue", bookFilter.value);
    renderBooks();
 }
+
+function restoreFilterState() {
+   const savedFilterValue = localStorage.getItem("filterValue");
+   if (savedFilterValue) {
+      bookFilter.value = savedFilterValue;
+   }
+   renderBooks();
+}
+
 function renderBooks() {
    if (!books.length) {
       bookList.innerHTML = `
@@ -145,7 +155,6 @@ function renderBooks() {
             : true;
       return isSearchBookValue && filterValueType;
    });
-   saveBooks();
    const html = filterBooksType
       .map(
          (book) => `
@@ -182,7 +191,7 @@ function handleExportBooks() {
    a.click();
 }
 
-renderBooks();
+restoreFilterState();
 
 bookList.addEventListener("click", handleActionsBooks);
 deleteAllBooks.addEventListener("click", handleDeleteAllBooks);
