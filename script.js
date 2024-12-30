@@ -22,6 +22,12 @@ function idGenerator(length = 5) {
    return result;
 }
 
+function escapeHTML(html) {
+   const div = document.createElement("div");
+   div.innerText = html;
+   return div.innerHTML;
+}
+
 let books = JSON.parse(localStorage.getItem("books")) ?? [];
 
 bookForm.onsubmit = function (e) {
@@ -56,7 +62,7 @@ bookForm.onsubmit = function (e) {
    bookForm.reset();
 };
 
-bookList.onclick = function (e) {
+function handleActionsBooks(e) {
    const booksItem = e.target.closest(".book-item");
    if (!booksItem) return;
    const bookId = booksItem.dataset.id;
@@ -90,7 +96,7 @@ bookList.onclick = function (e) {
          return;
       }
    }
-};
+}
 
 function isDuplicate(title) {
    return books.some(
@@ -102,22 +108,22 @@ function saveBooks() {
    localStorage.setItem("books", JSON.stringify(books));
 }
 
-deleteAllBooks.onclick = function () {
+function handleDeleteAllBooks() {
    if (!books.length) return;
    if (confirm("You will definitely delete all the books")) {
       books = [];
       renderBooks();
       saveBooks();
    }
-};
+}
 
-bookSearch.oninput = function () {
+function handleSearchBooks() {
    renderBooks();
-};
+}
 
-bookFilter.onchange = function () {
+function handleFiltersBooks() {
    renderBooks();
-};
+}
 function renderBooks() {
    if (!books.length) {
       bookList.innerHTML = `
@@ -144,10 +150,12 @@ function renderBooks() {
          (book) => `
     <li class="book-item" data-id="${book.id}">
                <div class="book-info">
-                  <p class="book-title">${book.title}</p>
-                  <p class="book-author">Author: ${book.author}</p>
-                  <p class="book-genre">${book.fiction}</p>
-                  <p class="book-rating">Rating: ${book.rating}⭐</p>
+                  <p class="book-title">${escapeHTML(book.title)}</p>
+                  <p class="book-author">Author: ${escapeHTML(book.author)}</p>
+                  <p class="book-genre">${escapeHTML(book.fiction)}</p>
+                  <p class="book-rating">Rating: ${escapeHTML(
+                     book.rating
+                  )}⭐</p>
                   <button title='yêu thích' class="action-btn favorite ${
                      book.isFinite ? "active" : ""
                   }">⭐</button>
@@ -163,7 +171,7 @@ function renderBooks() {
    bookList.innerHTML = html;
 }
 
-exportBooks.onclick = function () {
+function handleExportBooks() {
    const data = JSON.stringify(books, null, 2);
    const blob = new Blob([data], { type: "application/json" });
    const url = URL.createObjectURL(blob);
@@ -171,6 +179,12 @@ exportBooks.onclick = function () {
    a.href = url;
    a.download = "books.json";
    a.click();
-};
+}
 
 renderBooks();
+
+bookList.addEventListener("click", handleActionsBooks);
+deleteAllBooks.addEventListener("click", handleDeleteAllBooks);
+bookSearch.addEventListener("input", handleSearchBooks);
+bookFilter.addEventListener("change", handleFiltersBooks);
+exportBooks.addEventListener("click", handleExportBooks);
