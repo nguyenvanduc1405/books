@@ -118,10 +118,12 @@ function handleDeleteAllBooks() {
 }
 
 function handleSearchBooks() {
+   saveBooks();
    renderBooks();
 }
 
 function handleFiltersBooks() {
+   saveBooks();
    renderBooks();
 }
 function renderBooks() {
